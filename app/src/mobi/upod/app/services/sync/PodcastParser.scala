@@ -5,7 +5,7 @@ import java.net.URL
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.module.itunes.FeedInformation
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.module.itunes.types.{Category => ITunesCategory}
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed
-import mobi.upod.app.data.{Category, FlattrLink}
+import mobi.upod.app.data.Category
 import mobi.upod.net.UriUtils
 import mobi.upod.syndication.CacheInfo
 
@@ -65,7 +65,6 @@ private[sync] object PodcastParser {
        mergeOption(iTunesOption(_.getSummary), Option(feed.getDescription)),
        getFeedImageUrl(iTunesOption(_.getImage), Option(feed.getImage).flatMap(img => Try(new URL(url, img.getUrl)).toOption)),
        None,
-       FlattrLink(feed.getLinks, feed.getForeignMarkup),
        cacheInfo.flatMap(_.lastModified),
        cacheInfo.flatMap(_.eTag)
      )

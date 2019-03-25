@@ -17,8 +17,7 @@ case class EpisodeSyncInfo(
   author: Option[String],
   keywords: Set[String],
   description: Option[String],
-  media: Media,
-  flattrLink: Option[URL]) {
+  media: Media) {
 
   def toEpisode(podcastInfo: EpisodePodcastInfo): Episode = Episode(
     podcast,
@@ -31,7 +30,6 @@ case class EpisodeSyncInfo(
     keywords,
     description,
     media,
-    flattrLink,
     podcastInfo
   )
 }
@@ -48,8 +46,7 @@ object EpisodeSyncInfo extends MappingProvider[EpisodeSyncInfo] {
     "author" -> optional(string),
     "keywords" -> set(string),
     "description" -> optional(string),
-    "media" -> Media.mapping,
-    "flattrLink" -> optional(url)
+    "media" -> Media.mapping
   )(apply)(unapply)
 
   def jsonMapping(podcast: URI) = map(
@@ -61,7 +58,6 @@ object EpisodeSyncInfo extends MappingProvider[EpisodeSyncInfo] {
     "author" -> optional(string),
     "keywords" -> csvStrings,
     "description" -> optional(string),
-    "media" -> Media.jsonMapping,
-    "flattrLink" -> optional(url)
-  )(apply(podcast, _, _, _, _, _, _, _, _, _, _))(e => Some(e.uri, e.published, e.title, e.subTitle, e.link, e.author, e.keywords, e.description, e.media, e.flattrLink))
+    "media" -> Media.jsonMapping
+  )(apply(podcast, _, _, _, _, _, _, _, _, _))(e => Some(e.uri, e.published, e.title, e.subTitle, e.link, e.author, e.keywords, e.description, e.media))
 }

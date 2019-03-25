@@ -19,7 +19,6 @@ final case class PodcastSyncInfo(
   description: Option[String],
   imageUrl: Option[URL],
   colors: Option[PodcastColors],
-  flattrLink: Option[URL],
   modified: Option[DateTime],
   eTag: Option[String]) {
 
@@ -36,7 +35,6 @@ final case class PodcastSyncInfo(
     description,
     imageUrl,
     colors,
-    flattrLink,
     modified,
     eTag
   )
@@ -54,7 +52,6 @@ final case class PodcastSyncInfo(
     description,
     imageUrl,
     colors,
-    flattrLink,
     modified,
     eTag,
     true,
@@ -87,7 +84,6 @@ object PodcastSyncInfo extends MappingProvider[PodcastSyncInfo] {
     "description" -> optional(string),
     "imageUrl" -> optional(url),
     "colors" -> PodcastColors.optionalMapping,
-    "flattrLink" -> optional(url),
     "modified" -> optional(dateTime),
     "eTag" -> optional(string)
   )(apply)(unapply)
@@ -106,7 +102,6 @@ object PodcastSyncInfo extends MappingProvider[PodcastSyncInfo] {
     "description" -> optional(string),
     "imageUrl" -> optional(url),
     "colors" -> PodcastColors.optionalMapping,
-    "flattrLink" -> optional(url),
     "modified" -> optional(dateTime),
     "eTag" -> optional(string)
   )(apply)(unapply)

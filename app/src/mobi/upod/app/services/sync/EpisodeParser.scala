@@ -67,8 +67,7 @@ private[sync] object EpisodeParser {
       mergeOption(iTunesOption(_.getAuthor), Option(episode.getAuthor)),
       iTunesInfo.map(_.getKeywords.toSet).getOrElse(Set()),
       mergeOption(contentOption, mergeOption(Option(episode.getDescription).map(_.getValue), iTunesOption(_.getSummary))),
-      media,
-      FlattrLink(episode.getLinks, episode.getForeignMarkup)
+      media
     )
   }
 
