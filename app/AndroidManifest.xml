@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
           package="de.wcht.upod"
           android:sharedUserId="de.wcht.upod"
           android:sharedUserLabel="@string/app_user_name">
@@ -31,6 +31,8 @@
         <meta-data android:name="supportEmail" android:value="upod@wcht.de"/>
 
         <meta-data android:name="com.google.android.backup.api_key" android:value=""/>
+
+        <meta-data tools:replace="android:value" android:name="android.support.VERSION" android:value="26.0.2" />
 
         <!-- activities -->
         <activity
