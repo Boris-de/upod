@@ -93,16 +93,21 @@ object MediaSessionCompat {
 
   private class MediaSessionOreo(context: Context, sessionActivity: PendingIntent, mediaButtonIntent: PendingIntent)
     extends MediaSessionLollipop(context, sessionActivity, mediaButtonIntent) {
+    @volatile private var isEventReceiverRegistered = false
     private val mediaControlEventReceiver = new MediaControlEventReceiver
 
     override def register(): Unit = {
       super.register()
       context.registerReceiver(mediaControlEventReceiver, initIntentFilter)
+      isEventReceiverRegistered = true
     }
 
     override def release(): Unit = {
       super.release()
-      context.unregisterReceiver(mediaControlEventReceiver)
+      if (isEventReceiverRegistered) {
+        isEventReceiverRegistered = false
+        context.unregisterReceiver(mediaControlEventReceiver)
+      }
     }
 
     private def initIntentFilter = {
