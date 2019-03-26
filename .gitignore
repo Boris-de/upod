@@ -4,6 +4,7 @@ bin/
 build/
 gen/
 target/
+out/
 .gradle/
 .d
 *.iml
