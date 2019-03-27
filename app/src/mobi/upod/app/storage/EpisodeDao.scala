@@ -45,7 +45,6 @@ class EpisodeDao(dbHelper: DatabaseHelper)(implicit bindingModule: BindingModule
     mediaSubType -> TEXT,
     mediaLength -> INTEGER,
     mediaDuration -> INTEGER,
-    flattrLink -> TEXT,
     podcastId -> INTEGER,
     podcastUrl -> TEXT,
     podcastTitle -> TEXT,
@@ -83,7 +82,6 @@ class EpisodeDao(dbHelper: DatabaseHelper)(implicit bindingModule: BindingModule
     mediaSubType,
     mediaLength,
     mediaDuration,
-    flattrLink,
     podcast,
     podcastId,
     podcastUrl,
@@ -1054,7 +1052,6 @@ object EpisodeDao extends DaoObject {
   val mediaSubType = Column('media_mimeType_subType)
   val mediaLength = Column('media_length)
   val mediaDuration = Column('media_duration)
-  val flattrLink = Column('flattrLink)
   val podcastId = Column('podcastInfo_id)
   val podcastUrl = Column('podcastInfo_url)
   val podcastTitle = Column('podcastInfo_title)

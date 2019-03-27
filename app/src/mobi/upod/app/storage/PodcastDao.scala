@@ -35,7 +35,6 @@ class PodcastDao(dbHelper: DatabaseHelper)(implicit bindingModule: BindingModule
     imageUrl -> TEXT,
     backgroundColor -> INTEGER,
     keyColor -> INTEGER,
-    flattrLink -> TEXT,
     modified -> INTEGER,
     eTag -> TEXT,
     subscribed -> INTEGER,
@@ -305,7 +304,6 @@ object PodcastDao extends DaoObject {
   val imageUrl = Column('imageUrl)
   val backgroundColor = Column('colors_background)
   val keyColor = Column('colors_key)
-  val flattrLink = Column('flattrLink)
   val modified = Column('modified)
   val eTag = Column('eTag)
   val subscribed = Column('subscribed)
