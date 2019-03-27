@@ -55,65 +55,8 @@ class PodcastDao(dbHelper: DatabaseHelper)(implicit bindingModule: BindingModule
     Index(table, 'url, false, TextIndexColumn(url))
   )
 
-  override protected[storage] def upgrade(database: Database, oldVersion: Int, newVersion: Int) {
+  override protected[storage] def upgrade(database: Database, oldVersion: Int, newVersion: Int): Unit = {
     log.info(s"upgrading podcast table from $oldVersion to $newVersion")
-    if (oldVersion < 20) {
-      schemaUpgrade(database) {
-        addColumns(database, ColumnDefinition(settingsPlaybackSpeed, REAL))
-      }
-    }
-    if (oldVersion < 35) {
-      schemaUpgrade(database) {
-        addColumns(database, ColumnDefinition(settingsAutoAddToPlaylist, INTEGER, Some(0)))
-      }
-    }
-    if (oldVersion < 39) {
-      schemaUpgrade(database) {
-        addColumns(database, ColumnDefinition(flattrLink, TEXT))
-      }
-    }
-    if (oldVersion < 45) {
-      schemaUpgrade(database) {
-        addColumns(
-          database,
-          ColumnDefinition(backgroundColor, INTEGER),
-          ColumnDefinition(keyColor, INTEGER)
-        )
-      }
-    }
-    if (oldVersion >= 45 && oldVersion < 49) {
-      schemaUpgrade(database){
-        addColumns(database, ColumnDefinition(keyColor, INTEGER))
-      }
-    }
-    if (oldVersion < 54) {
-      database.execSQL(sql"UPDATE $podcast SET $backgroundColor=NULL, $keyColor=NULL")
-    }
-    if (oldVersion < 60) {
-      schemaUpgrade(database) {
-        addColumns(database, ColumnDefinition(eTag, TEXT))
-      }
-    }
-    if (oldVersion < 61) {
-      schemaUpgrade(database) {
-        addColumns(database, ColumnDefinition(listed, INTEGER))
-      }
-    }
-    if (oldVersion < 75) {
-      schemaUpgrade(database) {
-        addColumns(database, ColumnDefinition(syncError, TEXT))
-      }
-    }
-    if (oldVersion < 90) {
-      schemaUpgrade(database) {
-        addColumns(database, ColumnDefinition(settingsVolumeGain, REAL))
-      }
-    }
-    if (oldVersion < 50) {
-      schemaUpgrade(database) {
-        recreateWithContent(database)
-      }
-    }
   }
 
   def find(id: Long): Option[Podcast] = findOne(sql"SELECT * FROM $podcast WHERE ${PodcastDao.id}=$id")

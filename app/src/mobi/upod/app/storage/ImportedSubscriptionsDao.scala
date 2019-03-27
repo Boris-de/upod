@@ -16,9 +16,7 @@ class ImportedSubscriptionsDao(dbHelper: DatabaseHelper)(implicit bindingModule:
   )
 
   override protected[storage] def upgrade(database: Database, oldVersion: Int, newVersion: Int): Unit = {
-    if (oldVersion < 73) {
-      create(database)
-    }
+    log.info(s"upgrading imported subscriptions table from $oldVersion to $newVersion")
   }
 
   def add(podcasts: Seq[URL]): Unit = {
