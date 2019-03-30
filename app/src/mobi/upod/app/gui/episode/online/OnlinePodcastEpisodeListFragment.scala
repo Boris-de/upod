@@ -2,9 +2,9 @@ package mobi.upod.app.gui.episode.online
 
 import android.content.Loader
 import android.view.View
+import de.wcht.upod.R
 import mobi.upod.android.app.action.{Action, SimpleFragmentActions}
 import mobi.upod.android.logging.Logging
-import de.wcht.upod.R
 import mobi.upod.app.data.{EpisodeListItem, PodcastListItem}
 import mobi.upod.app.gui.UsageTips.ShowcaseTip
 import mobi.upod.app.gui.episode._
@@ -12,7 +12,7 @@ import mobi.upod.app.gui.episode.download.AddEpisodesToDownloadListAction
 import mobi.upod.app.gui.episode.library.StarEpisodesAction
 import mobi.upod.app.gui.episode.news.AddEpisodesToLibraryAction
 import mobi.upod.app.gui.episode.playlist.AddEpisodesToPlaylistAction
-import mobi.upod.app.gui.{UsageTips, MainNavigation, ReloadOnEpisodeListChangedFragment}
+import mobi.upod.app.gui.{MainNavigation, ReloadOnEpisodeListChangedFragment, UsageTips, UsageTipsKey}
 import mobi.upod.app.services.OnlinePodcastService
 import mobi.upod.app.storage.EpisodeDao
 import mobi.upod.util.Cursor
@@ -45,7 +45,7 @@ final class OnlinePodcastEpisodeListFragment
   )
 
   override def usageTips: Seq[ShowcaseTip] = super.usageTips ++ Seq(
-    UsageTips.ShowcaseTip("subscribe_podcast", R.string.tip_subscribe_podcast, R.string.tip_subscribe_podcast_details, findSubscribeButton)
+    UsageTips.ShowcaseTip(UsageTipsKey.SUBSCRIBE_PODCAST, R.string.tip_subscribe_podcast, R.string.tip_subscribe_podcast_details, findSubscribeButton)
   )
 
   private def findSubscribeButton: View = {

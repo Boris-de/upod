@@ -27,11 +27,14 @@ trait UsageTips extends Injectable {
   private def shouldShow(tip: ShowcaseTip): Boolean =
     usageTipPreferences.getBoolean(tip.prefKey, true)
 
-  private def setShown(tip: ShowcaseTip): Unit = {
+  private def setShown(tip: KeyedTip): Unit = {
     val editor = usageTipPreferences.edit()
     editor.putBoolean(tip.prefKey, false)
     editor.commit()
   }
+
+  def disableAllTips(): Unit =
+    UsageTipsKey.values().map(new KeyedTip(_)).foreach(setShown)
 
   private def showTip(tip: ShowcaseTip): Unit = if (!showingTip && tip.canShow) {
     val targetView = Try(tip.target).getOrElse(null)
@@ -70,16 +73,18 @@ trait UsageTips extends Injectable {
 object UsageTips {
   private var showingTip: Boolean = false
 
-  class ShowcaseTip(val key: String, val titleId: Int, val detailsId: Int, getTarget: => View, val buttonRight: Boolean, getCanShow: => Boolean) {
-    def target: View = getTarget
-    
-    def canShow: Boolean = Try(getCanShow).getOrElse(false)
+  class KeyedTip(private val key: UsageTipsKey) {
+    private[UsageTips] val prefKey = s"show_${key.getKey}_tip"
+  }
 
-    private[UsageTips] val prefKey = s"show_${key}_tip"
+  class ShowcaseTip(key: UsageTipsKey, val titleId: Int, val detailsId: Int, getTarget: => View, val buttonRight: Boolean, getCanShow: => Boolean) extends KeyedTip(key) {
+    def target: View = getTarget
+
+    def canShow: Boolean = Try(getCanShow).getOrElse(false)
   }
 
   object ShowcaseTip {
-    def apply(key: String, titleId: Int, detailsId: Int, target: => View, buttonRight: Boolean = true, canShow: => Boolean = true): ShowcaseTip =
+    def apply(key: UsageTipsKey, titleId: Int, detailsId: Int, target: => View, buttonRight: Boolean = true, canShow: => Boolean = true): ShowcaseTip =
       new ShowcaseTip(key, titleId, detailsId, target, buttonRight, canShow)
   }
 }

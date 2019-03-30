@@ -10,7 +10,7 @@ import mobi.upod.app.gui.UsageTips.ShowcaseTip
 trait EpisodeListViewModeTip extends Fragment with UsageTips with SupportActionBar with AppInjection {
 
   override def usageTips: Seq[ShowcaseTip] = super.usageTips ++ Seq(
-    UsageTips.ShowcaseTip("episode_view_mode", R.string.tip_view_mode, R.string.tip_view_mode_details, supportActionBar.getCustomView)
+    UsageTips.ShowcaseTip(UsageTipsKey.EPISODE_VIEW_MODE, R.string.tip_view_mode, R.string.tip_view_mode_details, supportActionBar.getCustomView)
   )
 
   override def onCreate(savedInstanceState: Bundle): Unit = {

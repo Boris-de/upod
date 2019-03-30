@@ -4,13 +4,15 @@ import android.app.Activity
 import de.wcht.upod.R
 import mobi.upod.android.view.wizard.{ValueChoice, _}
 import mobi.upod.app.AppInjection
-import mobi.upod.app.gui.MainActivity
+import mobi.upod.app.gui.{MainActivity, UsageTips}
 import mobi.upod.app.gui.preference.importing.{DiagnosticsImport, OPMLImport}
 import mobi.upod.app.storage._
 
-final class StartupWizardActivity extends WizardActivity with StoragePermissionRequestActivity with AppInjection {
+final class StartupWizardActivity extends WizardActivity with StoragePermissionRequestActivity with AppInjection with UsageTips {
 
   import mobi.upod.app.gui.preference.StartupWizardActivity._
+
+  override def getActivity: Activity = this
 
   override protected def hasNextPage(currentPageIndex: Int, currentPageKey: String): Boolean = currentPageKey match {
     case PageKeyWelcome | PageKeyMigratingUser | PageKeyOPMLImportInformation => true
@@ -43,8 +45,16 @@ final class StartupWizardActivity extends WizardActivity with StoragePermissionR
   }
 
   override protected def onFinishButtonClicked(): Unit = {
+    if (isRecurringUser) {
+      disableAllTips()
+    }
     finishWizardOnStorageAvailable = true
     ensureExternalStoragePermission(true)
+  }
+
+  private def isRecurringUser = {
+    val key = currentPage.key
+    key == PageKeyRecurringUser || key == PageKeyMigratingUser
   }
 
   protected def onFinish(): Unit = {

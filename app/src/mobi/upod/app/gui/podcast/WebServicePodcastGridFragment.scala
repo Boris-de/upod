@@ -16,7 +16,7 @@ import mobi.upod.android.widget.OnScrolledToBottomListener
 import de.wcht.upod.R
 import mobi.upod.app.data.PodcastListItem
 import mobi.upod.app.gui.UsageTips.ShowcaseTip
-import mobi.upod.app.gui.{MainNavigation, UsageTips}
+import mobi.upod.app.gui.{MainNavigation, UsageTips, UsageTipsKey}
 import mobi.upod.app.services.PodcastDirectoryWebService
 import mobi.upod.app.storage.{ImageSize, PodcastDao}
 import mobi.upod.util.Cursor
@@ -210,8 +210,8 @@ sealed private[podcast] abstract class PopularCategoryPodcastsGridFragment(categ
   with UsageTips {
 
   override def usageTips: Seq[ShowcaseTip] = Seq(
-    UsageTips.ShowcaseTip("category_selection", R.string.tip_category_selection, R.string.tip_category_selection_details, supportActionBar.getCustomView, canShow = state.started),
-    UsageTips.ShowcaseTip("add_podcast", R.string.tip_add_podcast, R.string.tip_add_podcast_details, getActivity.findViewById(R.id.action_add_podcast), buttonRight = false, canShow = state.started)
+    UsageTips.ShowcaseTip(UsageTipsKey.CATEGORY_SELECTION, R.string.tip_category_selection, R.string.tip_category_selection_details, supportActionBar.getCustomView, canShow = state.started),
+    UsageTips.ShowcaseTip(UsageTipsKey.ADD_PODCAST, R.string.tip_add_podcast, R.string.tip_add_podcast_details, getActivity.findViewById(R.id.action_add_podcast), buttonRight = false, canShow = state.started)
   )
 
   override def onActivityCreated(savedInstanceState: Bundle): Unit = {
