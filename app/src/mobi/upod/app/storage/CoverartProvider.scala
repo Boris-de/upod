@@ -41,7 +41,14 @@ class CoverartProvider(context: Context)(implicit val bindingModule: BindingModu
     getImageDir(url).mkdirs()
   }
 
-  def getImageFile(url: URL, size: ImageSize): File = new File(getImageDir(url), size.fileName)
+  def getImageFile(url: URL, size: ImageSize): File = {
+    val file = new File(getImageDir(url), size.fileName)
+    if (file.length() > 0) {
+      file
+    } else {
+      new File(getImageDir(url), ImageSize.full.fileName)
+    }
+  }
 
   def getExistingImageFile(url: URL, size: ImageSize): Option[File] = {
     if (storageProvider.readable) {

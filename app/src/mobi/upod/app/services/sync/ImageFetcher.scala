@@ -125,7 +125,10 @@ class ImageFetcher(implicit val bindingModule: BindingModule) extends Injectable
 
   private def saveBitmap(bmp: Bitmap, target: File) {
     forCloseable(new FileOutputStream(target).buffered) { stream =>
-      bmp.compress(if (bmp.hasAlpha) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG, 100, stream)
+      val format = if (bmp.hasAlpha) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG
+      if (!bmp.compress(format, 90, stream)) {
+        log.warn(s"Failed to compress bitmap as $format to $target")
+      }
     }
   }
 }
